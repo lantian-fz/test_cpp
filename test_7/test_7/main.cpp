@@ -12,6 +12,7 @@ using namespace std;
 /////////////////////////////////////////
 class String
 {
+	friend ostream& operator << (ostream &out, const String &s);
 public:
 	String(char *str = "")
 	{
@@ -116,6 +117,12 @@ private:
 	char *m_data;
 };
 
+ostream& operator<<(ostream &out, const String &s)
+{
+	out << s.m_data;
+	return out;
+}
+
 int main()
 {
 	String s1("Hello "); //s1[0] ==> H
@@ -145,6 +152,10 @@ int main()
 		cout << "s1 >= s2" << endl;
 	if (s1 <= s2)
 		cout << "s1 <= s2" << endl;
+	
+	cout << s1 << endl;
+
+	//s1 << cout << endl;
 
 	return 0;
 }
