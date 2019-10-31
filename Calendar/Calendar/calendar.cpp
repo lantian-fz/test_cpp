@@ -72,3 +72,27 @@ void CDateTime::DateTimeDShow()
 	ShowCursor();//退出动态显示后显示光标
 }
 
+void CDateTime::ShowMenology()
+{
+	GetCurDateTime();//先获取当前时间
+	_ShowMenology(m_date.year, m_date.month);
+}
+
+void CDateTime::_ShowMenology(int year, int month)
+{
+	char *title[] = { "一", "二", "三", "四", "五", "六", "日" };
+	for (int i = 0; i<7; ++i)
+		printf("%-6s", title[i]);
+	printf("\n");
+
+	int mdays = GetMDayByYM(year, month);//获取是第几个月
+	int week = GetWeekByYMD(year, month, 1);//获取星期几
+
+	if (7 == week)
+		week = 7;
+
+	for (int i = 0; i < week - 1; i++)
+		printf("%-6c", ' ');
+
+
+}
