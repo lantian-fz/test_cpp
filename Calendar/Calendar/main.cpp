@@ -14,7 +14,9 @@ void Menu()
 int main()
 {
 	int input = 0;
+	int n = 0;
 	CDateTime dt;
+	//CDateTime tmp;
 	
 	do
 	{
@@ -30,12 +32,16 @@ int main()
 			dt.DateTimeDShow();
 			break;
 		case 3:
+			dt.ShowMenology();
 			break;
 		case 4:
 			break;
 		case 5:
 			break;
 		case 6:
+			//cin >> n;
+			//tmp = dt.NextDateTime(10);
+			//tmp.ShowMenology();
 			break;
 		case 7:
 			break;

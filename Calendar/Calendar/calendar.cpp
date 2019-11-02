@@ -60,7 +60,7 @@ void CDateTime::DateTimeDShow()
 	{
 		if (_kbhit())
 		{
-			int val = getch();
+			int val = _getch();
 			if (val == ESC)
 				break;
 		}
@@ -85,7 +85,7 @@ void CDateTime::_ShowMenology(int year, int month)
 		printf("%-6s", title[i]);
 	printf("\n");
 
-	int mdays = GetMDayByYM(year, month);//获取是第几个月
+	int mdays = GetMDayByYM(year, month);//获取month月有多少天
 	int week = GetWeekByYMD(year, month, 1);//获取星期几
 
 	if (7 == week)
@@ -93,6 +93,69 @@ void CDateTime::_ShowMenology(int year, int month)
 
 	for (int i = 0; i < week - 1; i++)
 		printf("%-6c", ' ');
+	//printf("\n");
 
+	for (int i = 1; i <= mdays; i++)
+	{
+		printf("%-6d", i);
+		int w = GetWeekByYMD(year, month, i);
+		if (0 == w)
+			printf("\n\n");
+	}
+	printf("\n");	
+}
 
+bool CDateTime::IsLeap(int year)
+{
+	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+		return true;
+	return false;
+}
+
+int CDateTime::GetMDayByYM(int year, int month)
+{
+	int days[] = { 29, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };//每个月的天数
+	       //  days[0]用来存储闰年2月的天数
+	if (2 == month)
+	{
+		if (IsLeap(year))
+			return days[0];
+	}
+	return days[month];
+}
+
+int CDateTime::GetWeekByYMD(int year, int month, int day)
+{
+	if (1 == month || 2 == month)
+	{
+		month += 2;
+		year -= 1;
+	}
+	//蔡勒公式
+	return (day + 2 * month + 3 * (month + 1) / 5 + year + year / 4 - year / 100 + year / 400 + 1) % 7;
+}
+//CDateTime CDateTime::NextDateTime(int n);
+
+CDateTime CDateTime::NextDateTime(int n)
+{
+	int year = m_date.year;
+	int month = m_date.month;
+	int day = m_date.day;
+
+	int mday = GetMDayByYM(year, month);//这个月的天数
+
+	while (day + n > mday)
+	{
+		month++;
+		if (month > 12)
+		{
+			year++;
+			month = 1;
+		}
+		n -= mday;
+		mday = GetMDayByYM(year, month);//获得新的月份的天数
+	}
+	day += n;
+
+	return CDateTime(year, month, day, m_time.hour, m_time.minute, m_time.second);
 }

@@ -27,6 +27,7 @@ class CDateTime
 {
 public:
 	CDateTime();
+	CDateTime(int year, int month, int day, int hour, int minute, int second);
 	~CDateTime();
 
 public:
@@ -38,6 +39,9 @@ public:
 public:
 	void _ShowMenology(int year, int month);//获得月历
 	int GetWeekByYMD(int year, int month, int day);//获得星期几
+public:
+	CDateTime NextDateTime(int n);//n天后的月历
+	//CDateTime PrevDateTime(int n);//n天前的月历
 
 protected:
 	bool IsLeap(int year);//判断是否为闰年
