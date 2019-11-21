@@ -13,55 +13,34 @@ using namespace std;
 //要求 :
 //	该字符串只包含小写的英文字母。
 //	给定字符串的长度和 k 在[1, 10000]范围内。
-
-void reverse(string &s,int k)
+void reverse(string &s, int i, int k)
 {
-	int i, j;
-	for (i = 0, j = k-1; i < j; i++, j--)
+	int j = i + k - 1;
+	k /= 2;
+	while (k)
 	{
-		swap(s[i], s[j]);
+		swap(s[i++], s[j--]);
+		k--;
 	}
 }
-string reverseStr(string s, int k) 
+string reverseStr(string s, int k)
 {
 	int sz = s.size();
 	if (k>sz)
 		return s;
 	int i = 0;
-	string tmp;
-	tmp.resize(10000);
-	while (i <= sz)
+	while (i < sz)
 	{
 		if (sz - i < k)
 		{
 			//剩下的全部反转
-
-			int x = i;
-			for (int j = 0; i < sz; i++, j++)
-			{
-				tmp[j] = s[i];
-			}
-			reverse(tmp,k);
-			for (int j = 0; tmp[j] != '\0'; j++)
-			{
-				s[x++] = tmp[j];
-			}
+			reverse(s, i, sz - i);	
 		}
 		else
 		{
 			//每2k个字符的前k个字符反转
-
-			int x = i;
-			for (int j = 0; j < k; j++, i++)
-			{
-				tmp[j] = s[i];
-			}
-			reverse(tmp,k);
-			for (int j = 0; j < k; j++)
-			{
-				s[x++] = tmp[j];
-				i++;
-			}
+			reverse(s, i, k);
+			i += 2 * k;
 		}
 	}
 	return s;
@@ -69,9 +48,70 @@ string reverseStr(string s, int k)
 
 int main()
 {
-	string s = "abcdefg";
+	string s = "abcd";
 	string s2 = reverseStr(s, 2);
 	cout << s2 << endl;
 
 	return 0;
 }
+//void reverse(string &s,int k)
+//{
+//	int i, j;
+//	for (i = 0, j = k-1; i < j; i++, j--)
+//	{
+//		swap(s[i], s[j]);
+//	}
+//}
+//string reverseStr(string s, int k) 
+//{
+//	int sz = s.size();
+//	if (k>sz)
+//		return s;
+//	int i = 0;
+//	string tmp;
+//	tmp.resize(10000);
+//	while (i <= sz)
+//	{
+//		if (sz - i < k)
+//		{
+//			//剩下的全部反转
+//
+//			int x = i;
+//			for (int j = 0; i < sz; i++, j++)
+//			{
+//				tmp[j] = s[i];
+//			}
+//			reverse(tmp,k);
+//			for (int j = 0; tmp[j] != '\0'; j++)
+//			{
+//				s[x++] = tmp[j];
+//			}
+//		}
+//		else
+//		{
+//			//每2k个字符的前k个字符反转
+//
+//			int x = i;
+//			for (int j = 0; j < k; j++, i++)
+//			{
+//				tmp[j] = s[i];
+//			}
+//			reverse(tmp,k);
+//			for (int j = 0; j < k; j++)
+//			{
+//				s[x++] = tmp[j];
+//				i++;
+//			}
+//		}
+//	}
+//	return s;
+//}
+//
+//int main()
+//{
+//	string s = "abcdefg";
+//	string s2 = reverseStr(s, 2);
+//	cout << s2 << endl;
+//
+//	return 0;
+//}
