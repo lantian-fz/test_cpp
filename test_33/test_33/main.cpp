@@ -38,20 +38,27 @@ string AddBinAry(string a, string b)
 		b.resize(sz_a, '0');
 	else
 		a.resize(sz_b, '0');
-	sum.resize(sz_a+1);
+	sum.resize(sz_a);
 	//相加
 	int y = 0;//进位
-	for (int i = 0; i < sz_a + 1; i++)
+	for (int i = 0; i < sz_a; i++)
 	{
 		int x = a[i] + b[i] + y - '0' - '0';
 		if (x >= 2)
 		{
 			y = 1;
 			sum[i] = '0';
+			if (i == sz_a)
+				sz_a++;
 		}
 		else
 		{
-			sum[i] = '1';
+			if (x == 0)
+			{
+				sum[i] = '0';
+			}
+			else
+				sum[i] = '1';
 			y = 0;
 		}
 	}
