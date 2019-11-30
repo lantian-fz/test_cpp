@@ -32,24 +32,29 @@ string AddBinAry(string a, string b)
 	Reverse(a);
 	Reverse(b);
 	//使a,b的长度相等，不等的用0来补充
-	int sz_a = a.size();
-	int sz_b = b.size();
-	if (sz_a >= sz_b)
-		b.resize(sz_a, '0');
+	if (a.size() >= b.size())
+		b.resize(a.size(), '0');
 	else
-		a.resize(sz_b, '0');
-	sum.resize(sz_a);
+		a.resize(b.size(), '0');
+	sum.resize(a.size());
 	//相加
 	int y = 0;//进位
-	for (int i = 0; i < sz_a; i++)
+	for (size_t i = 0; i < a.size(); i++)
 	{
 		int x = a[i] + b[i] + y - '0' - '0';
 		if (x >= 2)
 		{
 			y = 1;
-			sum[i] = '0';
-			if (i == sz_a)
-				sz_a++;
+			if (x == 3)
+				sum[i] = '1';
+			else
+				sum[i] = '0';
+			if (i == a.size() - 1)
+			{
+				i++;
+				sum.resize(a.size() + 1);
+				sum[i] = '1';
+			}
 		}
 		else
 		{
