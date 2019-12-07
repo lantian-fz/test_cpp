@@ -3,89 +3,152 @@
 #include <iostream>
 using namespace std;
 
-class A
+class Parent
 {
 public:
-	A()
+	Parent(int a)
 	{
-		cout << "A()的构造函数" << endl;
-		this->p = new char[64];
-		memset(this->p, 0, 64);
-		strcpy(this->p, "AAAAAAAAAAAA");
-	}
-
-	~A()
-	{
-		cout << "~A()析构函数" << endl;
-		if (this->p != nullptr)
-		{
-			delete[] this->p;
-			this->p = nullptr;
-		}
+		this->a = a;
 	}
 public:
-	virtual void Print()
+	virtual void Print(int a)
 	{
-		cout << "A: " << this->p << endl;
+		cout << "aaaaaaaaaaaaaaa" << endl;
+	}
+	void Print(int a, int b)
+	{
+		cout << "aaaaaaaaabbbbbbbbb" << endl;
 	}
 private:
-	char *p;
+	int a;
 };
 
-class B :public A
+class Child :public Parent
 {
 public:
-	B()
+	Child(int a, int b) :Parent(a)
 	{
-		cout << "B()的构造函数" << endl;
-		this->p = new char[64];
-		memset(this->p, 0, 64);
-		strcpy(this->p, "BBBBBB");
-	}
-
-	~B()
-	{
-		cout << "~B的析构函数" << endl;
-		if (this->p != nullptr)
-		{
-			delete[] this->p;
-			this->p = nullptr;
-		}
+		this->b = b;
 	}
 public:
-	virtual void Print()
+	virtual void Print(int a)
 	{
-		cout << "B: " << this->p << endl;
+		cout << "AAAAAAAAAAAAAA" << endl;
 	}
-	
+	void Print(int a, int b)
+	{
+		cout << "AAAAAAABBBBBBBBBBB" << endl;
+	}
 private:
-	char *p;
+	int b;
 };
 
-void func(A *ap)
+void fun(Parent *p)
 {
-	ap->Print();
-	delete ap; 
-}
-
-void test()
-{
-	//A *a = new A();
-	//func(a);
-	//delete a;
-
-	B *b = new B();
-	func(b);
-	//delete b;
-	//delete b;
-	//A a;
-	//B b;
-	//func(&a);
+	p->Print(10);
 }
 
 int main()
 {
-	test();
+	Parent *p1 = new Parent(10);
+	Parent *p2 = new Child(100, 200);
+	Child *c = new Child(10, 20);
+
+	//fun(p1);
+	p2->Print(30);
+	//p1->Print(2, 6);
+	//p2->Print(3, 4);
+	//c->Print(2, 6);
+	//fun(p2);
+	//fun(c);
 
 	return 0;
 }
+
+//class A
+//{
+//public:
+//	A()
+//	{
+//		cout << "A()的构造函数" << endl;
+//		this->p = new char[64];
+//		memset(this->p, 0, 64);
+//		strcpy(this->p, "AAAAAAAAAAAA");
+//	}
+//
+//	virtual ~A()
+//	{
+//		cout << "~A()析构函数" << endl;
+//		if (this->p != nullptr)
+//		{
+//			delete[] this->p;
+//			this->p = nullptr;
+//		}
+//	}
+//public:
+//	virtual void Print()
+//	{
+//		cout << "A: " << this->p << endl;
+//	}
+//private:
+//	char *p;
+//};
+//
+//class B :public A
+//{
+//public:
+//	B()
+//	{
+//		cout << "B()的构造函数" << endl;
+//		this->p = new char[64];
+//		memset(this->p, 0, 64);
+//		strcpy(this->p, "BBBBBB");
+//	}
+//
+//	~B()
+//	{
+//		cout << "~B的析构函数" << endl;
+//		if (this->p != nullptr)
+//		{
+//			delete[] this->p;
+//			this->p = nullptr;
+//		}
+//	}
+//public:
+//	virtual void Print()
+//	{
+//		cout << "B: " << this->p << endl;
+//	}
+//	
+//private:
+//	char *p;
+//};
+//
+//void func(A *ap)
+//{
+//	ap->Print();
+//	delete ap; 
+//}
+//
+//void test()
+//{
+//	//A *a = new A();
+//	//func(a);
+//	//delete a;
+//
+//	B *b = new B();
+//	func(b);
+//	//delete b;
+//	//delete b;
+//	//delete b;
+//	//A a;
+//	//B b;
+//	//func(&a);
+//}
+//
+//int main()
+//{
+//	test();
+//
+//	return 0;
+//}
