@@ -11,7 +11,7 @@ public:
 		this->a = a;
 	}
 public:
-	virtual void Print(int a)
+	void Print(int a)
 	{
 		cout << "aaaaaaaaaaaaaaa" << endl;
 	}
@@ -31,7 +31,7 @@ public:
 		this->b = b;
 	}
 public:
-	virtual void Print(int a)
+	void Print(int a)
 	{
 		cout << "AAAAAAAAAAAAAA" << endl;
 	}
@@ -51,11 +51,14 @@ void fun(Parent *p)
 int main()
 {
 	Parent *p1 = new Parent(10);
-	Parent *p2 = new Child(100, 200);
+	Parent *p2 = new Child(100,200);
 	Child *c = new Child(10, 20);
 
+	cout << p1 << endl;
+	cout << p2 << endl;
+
 	//fun(p1);
-	p2->Print(30);
+	//p2->Print(30);
 	//p1->Print(2, 6);
 	//p2->Print(3, 4);
 	//c->Print(2, 6);
