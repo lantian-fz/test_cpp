@@ -2,46 +2,102 @@
 
 #include <iostream>
 using namespace std;
+
 class A
 {
 public:
-	A(int a)
-	{
-		this->a = a;
-	}
 	virtual void fun()
 	{
-		cout << "AAAAAAAAAA" << endl;
+		cout << "AAAAAAAAAAAAA" << endl;
 	}
-
-private:
+public:
 	int a;
 };
 
 class B:public A
 {
 public:
-	B(int a, int b) :A(a)
-	{
-		this->b = b;
-	}
 	void fun()
 	{
-		cout << "BBBBBBBBB" << endl;
+		cout << "BBBBBBBBBBBBBBB" << endl;
 	}
-private:
+public:
 	int b;
+};
+
+class C:public A
+{
+public:
+	int c;
+};
+
+class D:public B,public C 
+{
+public:
+	int d;
 };
 
 int main()
 {
-	A a;
-	B b;
-	a.fun();
-	b.fun();
+	//D d;
+	//d.B::a = 1;
+	//d.C::a = 2;
+	//d.b = 3;
+	//d.c = 4;
+	//d.d = 5;
+	A *a1 = new A();
+
+	A *b1 = a1;
+
+	b1->fun();
+
+	//cout << &(d.B::a) << endl;
+	//cout << &(d.C::a) << endl;
+	//cout << &(d.b) << endl;
 
 	return 0;
 }
+
+//class A
+//{
+//public:
+//	A(int a)
+//	{
+//		this->a = a;
+//	}
+//	virtual void fun()
+//	{
+//		cout << "AAAAAAAAAA" << endl;
+//	}
+//
+//private:
+//	int a;
+//};
+//
+//class B:public A
+//{
+//public:
+//	B(int a, int b) :A(a)
+//	{
+//		this->b = b;
+//	}
+//	void fun()
+//	{
+//		cout << "BBBBBBBBB" << endl;
+//	}
+//private:
+//	int b;
+//};
+//
+//int main()
+//{
+//	A a(1);
+//	B b(2,3);
+//	a.fun();
+//	b.fun();
+//
+//	return 0;
+//}
 
 //class A
 //{
