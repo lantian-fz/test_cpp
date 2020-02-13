@@ -7,28 +7,28 @@
 //返回能否得到24点，能输出true，不能输出false
 #include <iostream>
 #include <string>
-#include <vector>
+//#include <vector>
 using namespace std;
-
-bool Twenty_four(vector<int>& arr)
-{
-}
-
-int main()
-{
-	vector<int> arr;
-	for (int i = 0; i < 4; i++)
-	{
-		int tmp = 0;
-		cin >> tmp;
-
-		arr.push_back(tmp);
-	}
-
-	cout << Twenty_four(arr) << endl;
-
-	return 0;
-}
+//
+//bool Twenty_four(vector<int>& arr)
+//{
+//}
+//
+//int main()
+//{
+//	vector<int> arr;
+//	for (int i = 0; i < 4; i++)
+//	{
+//		int tmp = 0;
+//		cin >> tmp;
+//
+//		arr.push_back(tmp);
+//	}
+//
+//	cout << Twenty_four(arr) << endl;
+//
+//	return 0;
+//}
 
 
 //#include <iostream>
@@ -70,38 +70,34 @@ int main()
 //	cout << MAX_Arry(arr) << endl;
 //}
 
-//void KnockoutChar(string& str1, string& str2)
-//{
-//	int i = 0;
-//	int j = 0;
-//	int k = 0;
-//
-//	for (i = 0; str1[i] != '\0'; i++)
-//	{
-//		for (j = 0; str2[j] != '\0'; j++)
-//		{
-//			if (str1[i] == str2[j])
-//			{
-//				for (k = i; str1[k] != '\0'; k++)
-//					str1[k] = str1[k + 1];
-//			}
-//		}
-//
-//	}
-//}
-//
-//int main()
-//{
-//	string str1;
-//	string str2;
-//	//gets();
-//	//gets();
-//	str1.resize(1024);
-//	//str2.size(1024);
-//	cin.getline(str1);
-//	
-//
-//	KnockoutChar(str1, str2);
-//	cout << str1;
-//	return 0;
-//}
+void KnockoutChar(string& str1, string& str2)
+{
+	int i = 0;
+	int j = 0;
+	int k = 0;
+
+	for (i = 0; str1[i] != '\0'; i++)
+	{
+		for (j = 0; str2[j] != '\0'; j++)
+		{
+			if (str1[i] == str2[j])
+			{
+				for (k = i; str1[k] != '\0'; k++)
+					str1[k] = str1[k + 1];
+			}
+		}
+	}
+	str1.swap(str1);
+}
+
+int main()
+{
+	string str1;
+	string str2;
+	getline(cin, str1);
+	getline(cin, str2);
+
+	KnockoutChar(str1, str2);
+	cout << str1 << endl;
+	return 0;
+}
