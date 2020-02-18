@@ -1,6 +1,7 @@
 #pragma once
 #include "Common.h"
-#include "sqlite\sqlite3.h"
+#include "Sysutil.h"
+#include "./sqlite/sqlite3.h"
 
 //对数据库sqlite进行封装
 class SqliteManager
@@ -32,7 +33,11 @@ public:
 public:
 	void InitSqlite();//初始化数据库
 public:
-
+	void GetDocs(const string &path, set<string> &docs);//从数据库获取数据
+	void InserDoc(const string &path, string doc);//向数据库插入文档
+	void DeleteDoc(const string &path, string doc);//向数据库删除文档
+public:
+	void Search(const string &key, vector<pair<string, string>> &doc_path);
 private:
 	SqliteManager m_dbmgr;
 };

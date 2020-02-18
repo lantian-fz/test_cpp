@@ -7,3 +7,4 @@
 #include <set>
 
 using namespace std;
+#define MAX_SQL_SIZE 256

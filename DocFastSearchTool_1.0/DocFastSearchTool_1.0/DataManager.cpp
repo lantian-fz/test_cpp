@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include "DataManager.h"
-#pragma comment(lib,"sqlite\sqlite3.lib")
+#pragma comment(lib,"./sqlite/sqlite3.lib")
 
 SqliteManager::SqliteManager(){}
 SqliteManager::~SqliteManager(){}
