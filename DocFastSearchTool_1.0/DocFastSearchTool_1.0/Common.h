@@ -8,3 +8,4 @@
 
 using namespace std;
 #define MAX_SQL_SIZE 256
+#define MAX_BUF_SIZE 128
