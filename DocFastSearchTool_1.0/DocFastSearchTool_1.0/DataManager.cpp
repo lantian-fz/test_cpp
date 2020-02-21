@@ -1,15 +1,19 @@
 #define _CRT_SECURE_NO_WARNINGS 1
+
 #include "DataManager.h"
 #pragma comment(lib,"./sqlite/sqlite3.lib")
 
-SqliteManager::SqliteManager(){}
-SqliteManager::~SqliteManager(){}
+SqliteManager::SqliteManager() :m_db(nullptr)
+{}
+SqliteManager::~SqliteManager()
+{
+	Close();
+}
 
 void SqliteManager::Open(const string &path)
 {
-	char* zErrMsg = 0;
 	int rc = sqlite3_open("doc.db", &m_db);
-	if (rc)
+	if (rc!=SQLITE_OK)
 	{
 		ERROR_LOG("Can't open database");//无法打开数据库
 		return;
@@ -70,7 +74,7 @@ AuToGetResTable::AuToGetResTable(SqliteManager *db, const string &sql, int &row,
 :m_db(db), m_ppRet(nullptr)//自动获取表结果
 {
 	m_db->GetTable(sql, row, col, ppRet);
-	m_ppRet = ppRet;
+	m_ppRet = ppRet;	
 }
 
 AuToGetResTable::~AuToGetResTable()
@@ -85,6 +89,9 @@ DataManager::DataManager()
 	InitSqlite();//初始化数据库
 }
 
+DataManager::~DataManager(){}
+
+
 void DataManager::InitSqlite()
 {
 	char sql[MAX_SQL_SIZE] = { 0 };
@@ -93,3 +100,52 @@ void DataManager::InitSqlite()
 	m_dbmgr.ExecuteSql(sql);//执行SQL语句
 }
 
+//从数据库中获取数据
+void DataManager::GetDocs(const string &path, set<string> &docs)
+{
+	char sql[MAX_SQL_SIZE] = { 0 };
+	sprintf(sql, "select doc_name form %s where doc_path='%s'", DOC_TABLIE, path.c_str());
+
+	int row = 0, col = 0;
+	char** ppRet = 0;
+	AuToGetResTable at(&m_dbmgr, sql, row, col, ppRet);//获取结果表
+
+	for (int i = 1; i <= row; i++)
+		docs.insert(ppRet[i]);
+}
+
+//向数据库插入文档
+void DataManager::InserDoc(const string &path, string doc)
+{
+	char sql[MAX_SQL_SIZE] = { 0 };
+	sprintf(sql, "insert into %s values(NULL,'%s','%s')", DOC_TABLIE, path.c_str(), doc.c_str());
+	m_dbmgr.ExecuteSql(sql);
+}
+
+//从数据库删除文档
+void DataManager::DeleteDoc(const string &path, string doc)
+{
+	char sql[MAX_SQL_SIZE] = { 0 };
+	sprintf(sql, "delete from %s where doc_path='%s' and doc_name='%s'", DOC_TABLIE, path.c_str(), doc.c_str());
+	m_dbmgr.ExecuteSql(sql);
+
+	//递归删除子目录
+	string doc_path = path;
+	doc_path += "\\";
+	sprintf(sql, "delete from %s where doc_path like '%s%%'", DOC_TABLIE, doc_path.c_str());
+	m_dbmgr.ExecuteSql(sql);
+}
+
+//从数据库查找
+void DataManager::Search(const string &key, vector<pair<string, string>> &doc_path)
+{
+	char sql[MAX_SQL_SIZE] = { 0 };
+	sprintf(sql, "select doc_name,doc_path from %s where doc_name like '%%%s%%'", DOC_TABLIE, key.c_str());
+
+	int row = 0, col = 0;
+	char** ppRet = 0;
+	AuToGetResTable at(&m_dbmgr, sql, row, col, ppRet);
+
+	for (int i = 1; i <= row; i++)
+		doc_path.push_back(make_pair(ppRet[i*col + 0], ppRet[i*col + 1]));
+}

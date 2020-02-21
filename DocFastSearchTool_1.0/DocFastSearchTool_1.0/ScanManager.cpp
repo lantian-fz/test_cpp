@@ -1,5 +1,4 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-#include "Common.h"
 #include "ScanManager.h"
 
 void ScanManager::ScanDirectory(const string &path)
@@ -14,7 +13,7 @@ void ScanManager::ScanDirectory(const string &path)
 
 	//2 扫描数据库文件 并进行存储
 	set<string> db_set;
-
+	m_db.GetDocs(path, db_set);
 
 	//3 进行文件对比
 	auto local_it = local_set.begin();
@@ -25,12 +24,14 @@ void ScanManager::ScanDirectory(const string &path)
 		{
 			//本地文件存在，数据库文件不存在，则数据库增加文件
 			//增加文件
+			m_db.InserDoc(path, *local_it);
 			local_it++;
 		}
 		else if (*local_it > *db_it)
 		{
 			//本地文件不存在，数据库文件存在，则数据库删除文件
 			//删除文件
+			m_db.DeleteDoc(path, *db_it);
 			db_it++;
 		}
 		else
@@ -42,10 +43,20 @@ void ScanManager::ScanDirectory(const string &path)
 	}
 	while (local_it != local_set.end())
 	{
+		m_db.InserDoc(path, *local_it);
 		local_it++;
 	}
 	while (db_it != db_set.end())
 	{
+		m_db.DeleteDoc(path, *db_it);
 		db_it++;
+	}
+	//递归遍历子目录
+	for (auto &dir : local_dirs)
+	{
+		string dir_path = path;
+		dir_path += "\\";
+		dir_path += dir;
+		ScanDirectory(dir_path);
 	}
 }

@@ -36,7 +36,7 @@ private:
 };
 ////////////////////////////////////////////////////////////
 #define DOC_DB "doc.db"
-#define DOC_TABLIE "doc.tb"
+#define DOC_TABLIE "doc_tb"
 
 //数据库管理模块
 class DataManager

@@ -1,9 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #pragma once
 #include "Common.h"
 #include <stdarg.h>
 
 #ifndef __TRACE__
-	#define __TRACE__
+	//#define __TRACE__
 #endif
 
 #ifndef __DEBUG__
@@ -55,7 +56,7 @@ inline static void __ErrorDebug(const char* filename, int line, const char* func
 	vfprintf(stdout, format, args);
 	va_end(args);
 
-	fprintf(stdout, " errmsg:%s, errno:%d\n", strerror(errno), errno);
+	//fprintf(stdout, " errmsg:%s, errno:%d\n", strerror(errno), errno);
 #endif
 }
 

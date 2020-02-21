@@ -30,17 +30,17 @@ void DirectoryList(const string& path, vector<string>& subfile, vector<string>& 
 	//返回值： 若成功返回0，否则返回-1。 
 	//参数： handle：即由_findfirst函数返回回来的句柄。 
 	//	   fileinfo：文件信息结构体的指针。找到文件后，函数将该文件信息放入此结构体中
-	for (auto e : subfile)
-		cout << e << endl;
-	for (auto e : subdir)
-	{
-		cout << e << endl;
-		vector<string> _subfile;
-		vector<string> _subdir;
-		string tmp_path = path;
-		tmp_path += "\\";
-		tmp_path += e;//e为文件夹名
-		DirectoryList(tmp_path, _subfile, _subdir);
-	}
+	//for (auto e : subfile)
+	//	cout << e << endl;
+	//for (auto e : subdir)
+	//{
+	//	cout << e << endl;
+	//	vector<string> _subfile;
+	//	vector<string> _subdir;
+	//	string tmp_path = path;
+	//	tmp_path += "\\";
+	//	tmp_path += e;//e为文件夹名
+	//	DirectoryList(tmp_path, _subfile, _subdir);
+	//}
 	_findclose(handle);
 }
