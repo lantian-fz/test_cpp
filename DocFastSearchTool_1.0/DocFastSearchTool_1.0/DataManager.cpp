@@ -12,15 +12,15 @@ SqliteManager::~SqliteManager()
 
 void SqliteManager::Open(const string &path)
 {
-	int rc = sqlite3_open("doc.db", &m_db);
+	int rc = sqlite3_open(DOC_DB, &m_db);
 	if (rc!=SQLITE_OK)
 	{
-		ERROR_LOG("Can't open database");//无法打开数据库
+		ERROR_LOG("Can't open database无法打开数据库");//无法打开数据库
 		return;
 	}
 	else
 	{
-		TRACE_LOG("Opened database successfully");//打开数据库成功
+		TRACE_LOG("Opened database successfully打开数据库成功");//打开数据库成功
 	}
 }
 
@@ -31,11 +31,11 @@ void SqliteManager::Close()
 		int rc = sqlite3_close(m_db);//关闭数据库，返回一个句柄
 		if (rc != SQLITE_OK)
 		{
-			ERROR_LOG("Close database failed");//关闭数据库失败
+			ERROR_LOG("Close database failed关闭数据库失败");//关闭数据库失败
 			return;
 		}
 		else
-			TRACE_LOG("Close database successfully");//关闭数据库成功
+			TRACE_LOG("Close database successfully关闭数据库成功");//关闭数据库成功
 		m_db = nullptr;
 	}
 }
@@ -61,12 +61,12 @@ void SqliteManager::GetTable(const string &sql, int &row, int &col, char** &ppRe
 	int rc = sqlite3_get_table(m_db, sql.c_str(), &ppRet, &row, &col, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
-		ERROR_LOG("GetResTable error(sql: %s): %s\n", sql.c_str(), zErrMsg);
+		ERROR_LOG("GetTable error(sql: %s): %s\n", sql.c_str(), zErrMsg);
 		sqlite3_free(zErrMsg);
 	}
 	else
 	{
-		TRACE_LOG("GetResTable  successfully");
+		TRACE_LOG("GetTable  successfully");
 	}
 }
 
@@ -104,7 +104,7 @@ void DataManager::InitSqlite()
 void DataManager::GetDocs(const string &path, set<string> &docs)
 {
 	char sql[MAX_SQL_SIZE] = { 0 };
-	sprintf(sql, "select doc_name form %s where doc_path='%s'", DOC_TABLIE, path.c_str());
+	sprintf(sql, "select doc_name from %s where doc_path='%s'", DOC_TABLIE, path.c_str());
 
 	int row = 0, col = 0;
 	char** ppRet = 0;
@@ -115,7 +115,7 @@ void DataManager::GetDocs(const string &path, set<string> &docs)
 }
 
 //向数据库插入文档
-void DataManager::InserDoc(const string &path, string doc)
+void DataManager::InsertDoc(const string &path, string doc)
 {
 	char sql[MAX_SQL_SIZE] = { 0 };
 	sprintf(sql, "insert into %s values(NULL,'%s','%s')", DOC_TABLIE, path.c_str(), doc.c_str());

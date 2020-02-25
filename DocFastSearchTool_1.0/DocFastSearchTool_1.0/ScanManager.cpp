@@ -24,7 +24,7 @@ void ScanManager::ScanDirectory(const string &path)
 		{
 			//本地文件存在，数据库文件不存在，则数据库增加文件
 			//增加文件
-			m_db.InserDoc(path, *local_it);
+			m_db.InsertDoc(path, *local_it);
 			local_it++;
 		}
 		else if (*local_it > *db_it)
@@ -43,7 +43,7 @@ void ScanManager::ScanDirectory(const string &path)
 	}
 	while (local_it != local_set.end())
 	{
-		m_db.InserDoc(path, *local_it);
+		m_db.InsertDoc(path, *local_it);
 		local_it++;
 	}
 	while (db_it != db_set.end())

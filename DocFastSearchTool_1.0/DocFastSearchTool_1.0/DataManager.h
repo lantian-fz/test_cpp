@@ -48,7 +48,7 @@ public:
 	void InitSqlite();//初始化数据库
 public:
 	void GetDocs(const string &path, set<string> &docs);//从数据库获取数据
-	void InserDoc(const string &path, string doc);//向数据库插入文档
+	void InsertDoc(const string &path, string doc);//向数据库插入文档
 	void DeleteDoc(const string &path, string doc);//向数据库删除文档
 public:
 	void Search(const string &key, vector<pair<string, string>> &doc_path);

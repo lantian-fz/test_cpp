@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #pragma once
 #include "Common.h"
-#include <stdarg.h>
 
 #ifndef __TRACE__
 	//#define __TRACE__
