@@ -4,28 +4,48 @@
 //输出描述 :依次输出倒置之后的字符串, 以空格分割
 //输入: I like beijing.
 //输出: beijing. like I
+
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//// cin读取string时自动会被空格分隔开，用另一个字符串存储进行逆序输出
+//int main()
+//{
+//	string s1, s2;
+//	cin >> s2;
+//	while (cin >> s1)
+//		s2 = s1 + " " + s2;
+//	cout << s2 << endl;
+//	return 0;
+//}
 #include <iostream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 string& Reverse(string &s)
 {
 	reverse(s.begin(), s.end());
+	string::iterator it1 = s.begin();
+	string::iterator it2 = s.begin();
 	int n = 0;
-	for (int i = 0; i < s.size(); i++)
+	while (it1 != s.end())
 	{
-		while (s[i + 1] == ' ')
-			i++;
-		if (s[i] == ' ')//有可能有两个空格
+		if (*it1 == ' ')
 		{
-			if (i == s.size() - 1)
-			{
-				reverse(s.begin() + n, s.begin() + i + 1);
-				break;
-			}
-			reverse(s.begin() + n, s.begin() + i);
-			n = i + 1;
+			reverse(it2, it2 + n);
+			it2 += n+1;
+			n = 0;
+			it1++;
+			continue;
 		}
+		if (it1 + 1 == s.end())
+		{
+			reverse(it2, s.end());
+			break;
+		}
+		it1++;
+		n++;
 	}
 
 	return s;
