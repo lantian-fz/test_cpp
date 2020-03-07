@@ -49,6 +49,13 @@ int Cakes_2(vector<vector<int>> &arr)
 
 	return ret;
 }
+//蛋糕的分布符合下面的规律，@处为蛋糕位置
+//@@++@@++@@++@@++
+//@@++@@++@@++@@++
+//++@@++@@++@@++@@
+//++@@++@@++@@++@@
+//@@++@@++@@++@@++
+//@@++@@++@@++@@++
 
 int main()
 {
@@ -62,7 +69,8 @@ int main()
 		arr[i].resize(w);
 	}
 
-	cout << Cakes_1(arr) << endl;
+	//cout << Cakes_1(arr) << endl;
+	cout << Cakes_2(arr) << endl;
 
 	return 0;
 }
