@@ -15,11 +15,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <string.h>
 using namespace std;
 
 string StrSort(vector<string> &arr)
 {
-	int abc = 0;
+	int abc = 1;
 	int len = 0;
 
 	size_t i = 0;
@@ -29,8 +30,25 @@ string StrSort(vector<string> &arr)
 			break;
 	}
 	if (i == 0)
-		len++;
-	return "abc";
+		len = 1;
+
+	for (i = 0; i<arr.size() - 1; i++)
+	{
+		if (strcmp(arr[i].c_str(), arr[i + 1].c_str())>0)
+		{
+			abc = 0;	
+			break;
+		}
+	}
+
+	if (abc == 0 && len == 0)
+		return "none";
+	else if (abc == 1 && len == 0)
+		return "lexicographically";
+	else if (abc == 0 && len == 1)
+		return "lengths";
+	else
+		return "both";
 }
 
 int main()
