@@ -38,6 +38,72 @@ int Evaluate(string &password)
 	else
 		score += 25;
 	//二、字母:三、数字: 四、符号:
+	int majuscule = 0;//大写字母 
+	int small_letter = 0;//小写字母
+	int num = 0;//数字
+	int symbol = 0;//符号
+	for (size_t i = 0; i < password.size(); i++)
+	{
+		if (password[i] >= '0'&&password[i] <= '9')
+			num++;
+		else if (password[i] >= 'A'&&password[i] <= 'Z')
+			majuscule++;
+		else if (password[i] >= 'a'&&password[i] <= 'z')
+			small_letter++;
+		else
+			symbol++;
+	}
+	if (majuscule != 0 && small_letter != 0)//字母分
+		score += 20;
+	else if (majuscule > 0 || small_letter > 0)
+		score += 10;
+
+	if (num > 1)//数字分
+		score += 20;
+	else if (num == 1)
+		score += 10;
+
+	if (symbol > 1)//符号分
+		score += 25;
+	else if (symbol == 1)
+		score += 10;
+
+	if (majuscule != 0 && small_letter != 0 && num != 0 && symbol != 0)//奖励分
+		score += 5;
+	else if ((majuscule != 0 || small_letter != 0) && num != 0 && symbol != 0)
+		score += 3;
+	else if ((majuscule != 0 || small_letter != 0) && num != 0)
+		score += 2;
+
+	if (score >= 60)
+	{
+		if (score >= 80)
+		{
+			if (score >= 90)
+				return 6;
+			else
+				return 5;
+		}
+		else
+		{
+			if (score >= 70)
+				return 4;
+			else
+				return 3;
+		}
+	}
+	else
+	{
+		if (score >= 25)
+		{
+			if (score >= 50)
+				return 2;
+			else
+				return 1;
+		}
+		else
+			return 0;
+	}
 }
 
 int main()
@@ -45,9 +111,11 @@ int main()
 	//密码强度：弱->强  0->6级
 	vector<string> cla = { "VERY_WEAK", "WEAK", "AVERAGE", "STRONG", "VERY_STRONG", "SECURE", "VERY_SECURE" };
 	string password;
-	cin >> password;
-	
-	cout << cla[Evaluate(password)] << endl;
+
+	while (cin >> password)
+	{
+		cout << cla[Evaluate(password)] << endl;
+	}
 
 	return 0;
 }
