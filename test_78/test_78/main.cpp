@@ -12,28 +12,52 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
-int Print(vector<int> arr)
+//≈≈–Ú + dfs + ºÚµ•ºÙ÷¶
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+int x[1002], n;
+long long ans;
+long long sum, mul;
+void dfs(int index)
 {
-	int ret = 0;
-
-	return ret;
+	for (int i = index; i<n; i++)
+	{
+		sum += x[i];
+		mul *= x[i];
+		if (sum>mul)
+		{
+			ans++;
+			dfs(i + 1);
+		}
+		else if (x[i] == 1)
+		{
+			dfs(i + 1);
+		}
+		else
+		{
+			sum -= x[i];
+			mul /= x[i];
+			break;
+		}
+		sum -= x[i];
+		mul /= x[i];
+		for (; i < n - 1 && x[i] == x[i + 1]; i++);
+	}
 }
-
 int main()
 {
-	int n = 0;
-	vector<int> arr;
-	while (cin >> n)
+	//freopen("1.in", "r", stdin);
+	while (scanf("%d", &n) != EOF)
 	{
-		for (int i = 0; i < n; i++)
-		{
-			int x = 0;
-			cin >> x;
-			arr.push_back(x);
-		}
-		cout << Print(arr) << endl;
+		ans = 0;
+		sum = 0;
+		mul = 1;
+		for (int i = 0; i<n; i++)
+			scanf("%d", x + i);
+		std::sort(x, x + n);
+		dfs(0);
+		printf("%d\n", ans);
 	}
-
 	return 0;
 }
