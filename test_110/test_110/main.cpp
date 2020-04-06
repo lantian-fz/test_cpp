@@ -20,7 +20,7 @@ void NowCoder(int n)
 	int ret = 0;
 	int x = 2;//вђзг
 
-	while (x<=n)
+	while (x <= sqrt(n))
 	{
 		if (n%x == 0)
 		{
@@ -30,6 +30,8 @@ void NowCoder(int n)
 		}
 		x++;
 	}
+	if (n != 1)
+		ret++;
 	cout << ret << endl;
 }
 
@@ -38,12 +40,6 @@ int main()
 	int n = 0;
 	while (cin >> n)
 		NowCoder(n);
-	//for (int i = 2; i < 1000; i++)
-	//{
-	//	int ret = NowCoder(i);
-	//	if (ret>2)
-	//		cout << i << " " << ret << endl;
-	//}
 
 	return 0;
 }
