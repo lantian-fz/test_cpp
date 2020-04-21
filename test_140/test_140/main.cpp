@@ -61,7 +61,7 @@ using namespace std;
 int main()
 {
 	int n = 0;
-	string s = "222333444555666777888999";
+	string s = "22233344455566677778889999";
 	while (cin >> n)
 	{
 		set<string> st;
