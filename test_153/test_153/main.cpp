@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-//左右最值最大差
+//顺时针打印矩阵
 //对于一个矩阵，请设计一个算法从左上角(mat[0][0])开始，顺时针打印矩阵元素。
 //给定int矩阵mat, 以及它的维数nxm，请返回一个数组，数组中的元素为矩阵元素的顺时针输出。
 //测试样例：[[1, 2], [3, 4]], 2, 2
@@ -19,15 +19,23 @@ vector<int> clockwisePrint(vector<vector<int> > mat, int n, int m)
 		for (int i = col; i <= ccol; i++)
 			arr.push_back(mat[row][i]);
 		row++;
+		if (arr.size()==n*m)
+			break;
 		for (int i = row; i <= rrow; i++)
 			arr.push_back(mat[i][ccol]);
 		ccol--;
+		if (arr.size()==n*m)
+			break;
 		for (int i = ccol; i >= col; i--)
 			arr.push_back(mat[rrow][i]);
 		rrow--;
-		for (int i = rrow; i >= row; i++)
+		if (arr.size()==n*m)
+			break;
+		for (int i = rrow; i >= row; i--)
 			arr.push_back(mat[i][col]);
 		col++;
+		if (arr.size()==n*m)
+			break;
 	}
 	return arr;
 }
@@ -39,6 +47,6 @@ int main()
 	vector<int> ret = clockwisePrint(arr, n, m);
 	for (size_t i = 0; i < ret.size(); i++)
 		cout << ret[i] << " ";
-
+	cout << endl;
 	return 0;
 }
