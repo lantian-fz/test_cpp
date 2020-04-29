@@ -39,14 +39,33 @@ int myAtoi(string str)
 {
 	if (str.size() == 0)
 		return 0;
-	int ret = 0;
+	long long ret = 0;
 	int i = 0;
-	if (str[0] == ' ')
+	int flag = 1;//正数flag=1，负数flag=-1
+	while (str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		while (str[i] == ' ')
-			i++;
-
+		if (str[i] == '-')
+			flag = -1;
+		i++;
 	}
+	int count = 0;
+	while (str[i] >= '0'&&str[i] <= '9')
+	{
+		ret = ret * 10 + str[i] - '0';
+		i++;
+		if (ret != 0)
+			count++;
+		if (count > 10)
+			break;
+	}
+	ret *= flag;
+	if (ret < INT_MIN)
+		return INT_MIN;
+	if (ret>INT_MAX)
+		return INT_MAX;
+	return (int)ret;
 }
 
 int main()
