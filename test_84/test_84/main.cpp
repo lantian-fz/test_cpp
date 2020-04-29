@@ -20,31 +20,28 @@ string AddLongInteger(string &s1, string &s2)
 	reverse(s1.begin(), s1.end());
 	reverse(s2.begin(), s2.end());
 	string ret;
-	while (s1.size() != s2.size())
-	{
-		if (s1.size() < s2.size())
-			s1 += '0';
-		else if (s1.size()>s2.size())
-			s2 += '0';
-	}
-	int x = 0;
+	if (s1.size() > s2.size())
+		s2.resize(s1.size(), '0');
+	else
+		s1.resize(s2.size(), '0');
+
 	int count = 0;//½øÎ»
 
 	for (size_t i = 0; i < s1.size(); i++)
 	{
-		count = s1[i] + s2[i] - '0' - '0' + x;
+		count += s1[i] + s2[i] - '0' - '0';
 		if (count >= 10)
 		{
 			ret.push_back(count-10 + '0');
-			x = 1;
+			count = 1;
 		}
 		else
 		{
 			ret.push_back(count + '0');
-			x = 0;
+			count = 0;
 		}
 	}
-	if (x > 0)
+	if (count > 0)
 		ret.push_back('1');
 	reverse(ret.begin(), ret.end());
 	return ret;
