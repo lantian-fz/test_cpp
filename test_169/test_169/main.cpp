@@ -25,15 +25,12 @@ string countAndSay(int n)
 	if (n == 1)
 		return "1";
 	string s = "1";
-	//string tmp = s;
 	for (int i = 1; i < n; i++)
 	{
 		string tmp;
-
 		for (size_t j = 0; j < s.size(); j++)
 		{
 			int count = 0;
-			int x = j;
 			char t = s[j];
 			while (s[j] == t)
 			{
@@ -41,12 +38,12 @@ string countAndSay(int n)
 				j++;
 			}
 			tmp += to_string(count) + t;
-			if (j <= s.size() - 1)
-				j = x + 1;
+			if (j == s.size())
+				break;
+			j--;
 		}
 		s = tmp;
 	}
-
 
 	return s;
 }
