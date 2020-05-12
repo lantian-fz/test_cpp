@@ -20,16 +20,17 @@ int removeDuplicates(vector<int>& nums)
 	if (nums.size() <= 1)
 		return nums.size();
 	int index = 0;
-	int tmp = 0;
 	for (size_t i = 1; i < nums.size(); i++)
 	{
-
+		if (nums[i] != nums[index])
+			nums[++index] = nums[i];
 	}
+	return index + 1;
 }
 
 int main()
 {
-	vector<int> arr = { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 };
+	vector<int> arr = { 0, 0, 1, 2, 2, 3, 3, 4 };
 	cout << removeDuplicates(arr) << endl;
 	
 
