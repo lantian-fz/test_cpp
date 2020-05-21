@@ -1,4 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS 1
+//牛客-统计回文
 //“回文串”是一个正读和反读都一样的字符串，比如“level”或者“noon”等等就是回文串。花花非常喜欢这种拥有
 //对称美的回文串，生日的时候她得到两个礼物分别是字符串A和字符串B。现在她非常好奇有没有办法将字符串B插入字
 //符串A使产生的字符串是一个回文串。你接受花花的请求，帮助她寻找有多少种插入办法可以使新串是一个回文串。
@@ -17,11 +18,11 @@
 //输出: 2
 #include <iostream>
 #include <string>
-#include <string.h>
+#include <cstring>
 #include <algorithm>
 using namespace std;
 
-int Palindrome(string &a, string &b)
+int Palindrome_1(string &a, string &b)
 {
 	int ret = 0;
 	auto a_p = a.begin();
@@ -51,6 +52,22 @@ int Palindrome(string &a, string &b)
 	return ret;
 }
 
+int Palindrome_2(string &a, string &b)
+{
+	int ret = 0;
+	for (size_t i = 0; i <= a.size(); i++)
+	{
+		string tmp = a;
+		tmp.insert(i, b);
+		string re = tmp;
+		reverse(re.begin(), re.end());
+		if (strcmp(tmp.c_str(), re.c_str()) == 0)
+			ret++;
+	}
+
+	return ret;
+}
+
 int main()
 {
 	string a;
@@ -59,7 +76,8 @@ int main()
 	getline(cin, a);
 	getline(cin, b);
 
-	cout << Palindrome(a, b) << endl;
+	//cout << Palindrome_1(a, b) << endl;
+	cout << Palindrome_2(a, b) << endl;
 
 	return 0;
 }
