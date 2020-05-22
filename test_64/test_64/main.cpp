@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-//两种排序方法
+//牛客-两种排序方法
 //考拉有n个字符串字符串，任意两个字符串长度都是不同的。考拉最近学习到有两种字符串的排序方法： 
 //1.根据字符串的字典序排序。 例如："car" < "carriage" < "cats" < "doggies < "koala"
 //2.根据字符串的长度排序。   例如："car" < "cats" < "koala" < "doggies" < "carriage"
@@ -36,7 +36,7 @@ string StrSort(vector<string> &arr)
 	{
 		if (strcmp(arr[i].c_str(), arr[i + 1].c_str())>0)
 		{
-			abc = 0;	
+			abc = 0;
 			break;
 		}
 	}
