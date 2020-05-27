@@ -1,4 +1,126 @@
 #define _CRT_SECURE_NO_WARNINGS 1
+#define _CRT_SECURE_NO_WARNINGS 1
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+#define MAXSIZE 8
+
+typedef int Datatype;
+
+typedef struct CircleQueue
+{
+	Datatype *data;
+	int front;
+	int rear;
+}CircleQueue;
+
+void QueueInit(CircleQueue *q)//初始化
+{
+	q->data = (Datatype*)malloc(sizeof(Datatype)*MAXSIZE);
+	assert(q->data);
+	q->front = 0;
+	q->rear = 0;
+}
+
+int QueueEmpty(CircleQueue *q)//判队空
+{
+	if (q->front == q->rear)
+		return 1;
+	else
+		return 0;
+}
+
+int QueueEnter(CircleQueue *q, Datatype x)//入队
+{
+	if ((q->rear + 1) % MAXSIZE == q->front)//判断对满
+		return 0;
+	q->data[q->rear] = x;
+	q->rear = (q->rear + 1) % MAXSIZE;
+	return 1;
+}
+
+int QueueDelete(CircleQueue *q, Datatype *x)//出队
+{
+	if (QueueEmpty(q))//判队空
+		return 0;
+	*x = q->data[q->front];
+	q->front = (q->front + 1) % MAXSIZE;
+	return 1;
+}
+
+void QueueShow(CircleQueue *q)//显示
+{
+	int n = (q->rear - q->front + MAXSIZE) % MAXSIZE;
+	int i = q->front;
+	printf("元素：");
+	while (n--)
+	{
+		printf("%d ", q->data[i]);
+		i = (i + 1) % MAXSIZE;
+	}
+	n = (q->rear - q->front + MAXSIZE) % MAXSIZE;
+	i = q->front;
+	printf("\n位置：");
+	while (n--)
+	{
+		printf("%d ", i);
+		i = (i + 1) % MAXSIZE;
+	}
+	printf("\n");
+}
+
+void Menu()
+{
+	printf("          选择\n");
+	printf("*    1.入队    2.出队     *\n");
+	printf("*    3.显示    0.退出     *\n");
+}
+
+int main()
+{
+	int input = 0;
+	int x = 0;
+	CircleQueue qu;
+	QueueInit(&qu);//初始化循环队列
+
+	do
+	{
+		Menu();
+		printf("请选择：");
+		scanf("%d", &input);
+		switch (input)
+		{
+		case 1:
+			printf("请输入元素(以-1结束):");
+			while (scanf("%d", &x), x != -1)
+			{
+				if (QueueEnter(&qu, x) == 0)
+					printf("队列已满，%d 入队失败\n", x);
+			}
+			break;
+		case 2:
+			if (QueueDelete(&qu, &x))
+				printf("%d出队\n", x);
+			else
+				printf("队列为空，出队失败\n");
+			break;
+		case 3:
+			QueueShow(&qu);
+			break;
+		case 0:
+			break;
+		default:
+			printf("没有这个选项!\n");
+		}
+	} while (input);
+
+	printf("\n");
+	system("pause");
+	return 0;
+}
+/*
 //二叉排序树 
 #include<stdio.h>  
 #include<stdlib.h>  
@@ -140,3 +262,4 @@ int main()
 		printf("\n");
 	}
 }
+*/
