@@ -39,9 +39,45 @@ void Clear(ListNode *&head)
 
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) 
 {
-	ListNode *p = nullptr;
+	ListNode *p = new ListNode(-1);
+	ListNode *q = p;
+	int count = 0;
+	while (l1&&l2)
+	{
+		int x = l1->val + l2->val + count;
+		ListNode* s = new ListNode(x % 10);
+		q->next = s;
+		count = x / 10;
+		l1 = l1->next;
+		l2 = l2->next;
+		q = q->next;
+	}
+	while (l1)
+	{
+		int x = l1->val + count;
+		ListNode* s = new ListNode(x % 10);
+		q->next = s;
+		count = x / 10;
+		l1 = l1->next;
+		q = q->next;
+	}
 
-	return p;
+	while (l2)
+	{
+		int x = l2->val + count;
+		ListNode* s = new ListNode(x % 10);
+		q->next = s;
+		count = x / 10;
+		l2 = l2->next;
+		q = q->next;
+	}
+	if (count != 0)
+	{
+		ListNode *s = new ListNode(count);
+		q->next = s;
+	}
+
+	return p->next;
 }
 
 int main()
@@ -54,7 +90,9 @@ int main()
 
 	Insert(head2, 5);
 	Insert(head2, 6);
-	Insert(head2, 54);
+	Insert(head2, 4); 
+
+	ListNode *q = addTwoNumbers(head1, head2);
 
 	Clear(head1);
 	Clear(head2);
