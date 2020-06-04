@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 struct ListNode
@@ -40,9 +41,36 @@ void Clear(ListNode *&head)
 	}
 }
 
-ListNode* mergeKLists(vector<ListNode*>& lists) 
+ListNode* mergeKLists(vector<ListNode*>& lists) //暴力法，用数组存储元素，排序后构造新链表
 {
-
+	int n = lists.size();
+	if (n == 0)
+		return nullptr;
+	if (n == 1)
+		return lists[0];
+	vector<int> arr;
+	for (int i = 0; i < n; i++)
+	{
+		ListNode *p = lists[i];
+		if (p == nullptr)
+			continue;
+		while (p)
+		{
+			arr.push_back(p->val);
+			p = p->next;
+		}
+	}
+	if (arr.size() == 0)
+		return nullptr;
+	sort(arr.begin(), arr.end());
+	ListNode *new_lists = new ListNode(arr[0]);
+	ListNode *q = new_lists;
+	for (int i = 1; i < arr.size(); i++)
+	{
+		q->next = new ListNode(arr[i]);
+		q = q->next;
+	}
+	return new_lists;
 }
 
 int main()
@@ -66,7 +94,10 @@ int main()
 	arr.push_back(head3);
 	
 	ListNode* p = mergeKLists(arr);
-	//Clear(head);
+	Clear(head1);
+	Clear(head2);
+	Clear(head3);
+	Clear(p);
 
 	return 0;
 }
