@@ -20,8 +20,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
-//A-K 设置为1-13，joker=14,JOKER=15
+
 void Sepparation(vector<vector<string>> &ar, string &str)//分离空格
 {
 	auto it = str.begin();
@@ -70,9 +71,10 @@ int PlayingCardKind(vector<string> &str)//判断牌的种类
 		return 3;//炸弹
 	if (str.size() == 5)
 		return 4;//顺子
+	return 0;
 }
 
-string PlayingCard(string& str)
+void PlayingCard(string& str)
 {
 	string er("ERROR");
 	vector<vector<string>> ar;
@@ -103,22 +105,30 @@ string PlayingCard(string& str)
 	}
 	else if (flag1 == flag2)//牌的数量相同时
 	{
-
+		auto x1 = find(s.begin(), s.end(), ar[0][0]);
+		auto x2 = find(s.begin(), s.end(), ar[1][0]);
+		count = x1 < x2 ? 2 : 1;
 	}
 	else //牌无法比较时
+		count = 0;
+
+	//输出
+	if (count == 0)
+		cout << "ERROR" << endl;
+	else
 	{
-
+		int i = 0;
+		for (i = 0; i < ar[count - 1].size() - 1; i++)
+			cout << ar[count - 1][i] << " ";
+		cout << ar[count - 1][i] << endl;
 	}
-
-
-	return ar[0][0];
 }
 
 int main()
 {
 	string str;
-	while (getline(cin,str))
-		cout << PlayingCard(str) << endl;
+	while (getline(cin, str))
+		PlayingCard(str);
 
 	return 0;
 }
