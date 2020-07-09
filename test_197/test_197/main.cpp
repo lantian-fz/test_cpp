@@ -1,30 +1,71 @@
 #define _CRT_SECURE_NO_WARNINGS 1
+//牛客-替换空格
+//请实现一个函数，将一个字符串中的每个空格替换成“ % 20”。例如，当字符串为We Are Happy.
+//则经过替换之后的字符串为We%20Are % 20Happy。
 #include <iostream>
 using namespace std;
 
-class A
+void replaceSpace(char *str, int length) 
 {
-public:
-	A(){_a = 0;}
-	A(int a){_a = a;}
+	if (str == nullptr)
+		return;
+	int len = 0;//字符串实际长度
+	int spacenum = 0;//空格个数
+	for (int i = 0; str[i] != '\0'; ++i)
+	{
+		if (str[i] == ' ')
+			++spacenum;
+		++len;
+	}
+	int newlen = len + spacenum * 2;
+	if (newlen > length)
+		return;
+	int p1 = len;//p1指针指向原字符串的末尾
+	int p2 = newlen;//p2指针指向替换后字符串末尾
+	while (p1 >= 0 && p2 > p1)
+	{
+		if (str[p1] == ' ')
+		{
+			str[p2--] = '0';
+			str[p2--] = '2';
+			str[p2--] = '%';
+		}
+		else
+			str[p2--] = str[p1];
+		--p1;
+	}
+}
 
-	void PrintA()
-	{
-		cout << _a << endl;
-	}
-	void Show()const
-	{
-		cout << "show" << endl;
-		//PrintA();//报错
-	}
-private:
-	int _a;
-};
 void main()
 {
-	A a;
-	a.PrintA();
+	char str[30] = "We are happy.";
+	
+	replaceSpace(str, sizeof(str)/sizeof(str[0]));
 }
+
+//class A
+//{
+//public:
+//	A(){_a = 0;}
+//	A(int a){_a = a;}
+//
+//	void PrintA()
+//	{
+//		cout << _a << endl;
+//	}
+//	void Show()const
+//	{
+//		cout << "show" << endl;
+//		//PrintA();//报错
+//	}
+//private:
+//	int _a;
+//};
+//void main()
+//{
+//	A a;
+//	a.PrintA();
+//}
 //struct A
 //{
 //	char a;
