@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-//剑指offer答案，但未通过牛客
+//剑指offer答案，但未通过牛客,没有考虑exponent为负数的情况
 double Power(double base, int exponent) 
 {
 	if (exponent == 0)
@@ -19,8 +19,28 @@ double Power(double base, int exponent)
 		ret *= base;
 	return ret;
 }
+
+double Power_2(double base, int exponent)
+{
+	if (exponent == 0)
+		return 1;
+	if (exponent == 1)
+		return base;
+	bool flag = false;
+	if (exponent < 0)
+	{
+		exponent = -exponent;
+		flag = true;
+	}
+	double ret = 1.0f;
+	for (int i = 0; i < exponent; i++)
+		ret *= base;
+	if (flag)
+		ret = 1 / ret;
+	return ret;
+}
 void main()
 {
 	double num = 3.14f;
-	cout << Power(num, 2) << endl;
+	cout << Power_2(num, -2) << endl;
 }
