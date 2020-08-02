@@ -7,7 +7,9 @@ using namespace std;
 
 class MyString
 {
-	friend MyString& operator+(const MyString &s1, const MyString &s2);
+	//friend MyString& operator+(const MyString &s1, const MyString &s2);
+	//friend MyString& operator+=(const MyString &s1, const MyString &s2);
+
 public:
 	MyString(const char* str = "")
 	{
@@ -44,19 +46,21 @@ public:
 		return *this;
 	}
 
-	//MyString& operator+(const MyString &s)
-	//{
-	//	reserve(this->m_capacity + s.m_capacity + 1);
-	//	strcat(this->m_str, s.m_str);
-	//	this->m_size = strlen(this->m_str);
-	//	return *this;
-	//}
+	MyString operator+(const MyString &s)
+	{
+		MyString tmp;
+		tmp.reserve(this->m_capacity + s.m_capacity + 1);
+		strcat(tmp.m_str, s.m_str);
+		//strcat(this->m_str, s.m_str);
+		tmp.m_size = strlen(tmp.m_str);
+		return tmp;
+	}
 
 	MyString& operator+=(const MyString &s)
 	{
-		//	MyString tmp = *this + s;
-		//	MySwap(tmp);
-		*this + s;
+		reserve(this->m_capacity + s.m_capacity + 1);
+		strcat(this->m_str, s.m_str);
+		this->m_size = strlen(this->m_str);
 		return *this;
 	}
 
@@ -113,6 +117,7 @@ public:
 		this->m_size = sz;
 	}
 
+	char* c_str(){ return this->m_str; }
 
 private:
 	char* m_str;
@@ -120,16 +125,19 @@ private:
 	size_t m_capacity;
 };
 
-MyString& operator+(const MyString &s1, const MyString &s2)
-{
-	MyString tmp;
-	tmp.reserve(s1.m_capacity + s2.m_capacity + 1);
-	tmp.m_str = s1.m_str;
-	strcat(tmp.m_str, s2.m_str);
-	tmp.m_size = strlen(tmp.m_str);
-	return tmp;
-}
-
+//MyString& operator+(MyString &s1,MyString &s2)
+//{
+//	s1.reserve(s1.capacity() + s2.capacity() + 1);
+//	strcat(s1.c_str(), s2.c_str());
+//	//s1.m_size = strlen(s1.c_str());
+//	return s1;
+//}
+//
+//MyString& operator+=(MyString &s1, const MyString &s2)
+//{
+//	s1 = s1 + s2;
+//	return s1;
+//}
 
 void main()
 {
