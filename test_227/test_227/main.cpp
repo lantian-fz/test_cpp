@@ -6,6 +6,7 @@
 #include <iostream>
 #include <ctime>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 int Partition(vector<int>& arr, int start, int end)
@@ -59,12 +60,24 @@ vector<int> GetLeastNumbers_Solution(vector<int> input, int k)
 	return arr;
 }
 
+vector<int> GetLeastNumbers_Solution_2(vector<int> input, int k)
+{
+	vector<int> ret;
+	if (input.empty() || input.size() == k)
+		return input;
+	if (input.size()<k)
+		return ret;
+	sort(input.begin(), input.end());
+	vector<int> arr(input.begin(), input.begin() + k);
+	return arr;
+}
+
 void main()
 {
 	srand((unsigned int)time(NULL));
 
 	vector<int> arr = { 4, 5, 1, 6, 2, 7, 3, 8 };
-	vector<int>& ret = GetLeastNumbers_Solution(arr, 4);
+	vector<int>& ret = GetLeastNumbers_Solution_2(arr, 4);
 
 	for (auto e : ret)
 		cout << e << " ";
