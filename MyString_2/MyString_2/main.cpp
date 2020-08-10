@@ -7,9 +7,6 @@ using namespace std;
 
 class MyString
 {
-	//friend MyString& operator+(const MyString &s1, const MyString &s2);
-	//friend MyString& operator+=(const MyString &s1, const MyString &s2);
-
 public:
 	MyString(const char* str = "")
 	{
@@ -50,8 +47,8 @@ public:
 	{
 		MyString tmp;
 		tmp.reserve(this->m_capacity + s.m_capacity + 1);
+		strcat(tmp.m_str, this->m_str);
 		strcat(tmp.m_str, s.m_str);
-		//strcat(this->m_str, s.m_str);
 		tmp.m_size = strlen(tmp.m_str);
 		return tmp;
 	}
@@ -64,7 +61,7 @@ public:
 		return *this;
 	}
 
-	char operator[](size_t i)
+	char& operator[](size_t i)
 	{
 		assert(i < this->m_size);
 		return this->m_str[i];
@@ -86,6 +83,11 @@ public:
 		this->m_str[this->m_size++] = c;
 		this->m_str[this->m_size] = '\0';
 	}
+
+	void append(MyString s)
+	{
+		*this += s;
+	}
 public:
 	void MySwap(MyString &s)
 	{
@@ -95,6 +97,7 @@ public:
 	}
 	size_t size(){ return this->m_size; }
 	size_t capacity(){ return this->m_capacity; }
+	bool empty(){ return m_size == 0; }
 	void reserve(size_t capacity)
 	{
 		if (capacity > this->m_capacity)
@@ -119,28 +122,24 @@ public:
 
 	char* c_str(){ return this->m_str; }
 
+	void clear()
+	{
+		this->m_size = 0;
+		this->m_str[m_size] = '\0';
+	}
+
 private:
 	char* m_str;
 	size_t m_size;
 	size_t m_capacity;
 };
 
-//MyString& operator+(MyString &s1,MyString &s2)
-//{
-//	s1.reserve(s1.capacity() + s2.capacity() + 1);
-//	strcat(s1.c_str(), s2.c_str());
-//	//s1.m_size = strlen(s1.c_str());
-//	return s1;
-//}
-//
-//MyString& operator+=(MyString &s1, const MyString &s2)
-//{
-//	s1 = s1 + s2;
-//	return s1;
-//}
-
 void main()
 {
 	MyString s1 = "abc", s2 = "def";
 	MyString s3 = s1 + s2;
+	s1 += s2;
+	s1.push_back('a');
+	s1.append("eeee");
+	cout << s1.empty() << endl;
 }
