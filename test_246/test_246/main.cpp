@@ -9,6 +9,7 @@
 #include<iostream>
 #include<vector>
 #include<queue>
+#include<set>
 using namespace std;
 
 int findKthLargest(vector<int>& nums, int k) 
@@ -20,8 +21,21 @@ int findKthLargest(vector<int>& nums, int k)
 		q.pop();
 	return q.top();
 }
+//int findKthLargest_2(vector<int>& nums, int k)
+//{
+//	multiset<int> st(nums.begin(), nums.end());
+//	int i = 0;
+//	for (auto e : st)
+//	{
+//		i++;
+//
+//		if (i == k)
+//			return e;
+//	}
+//	return 0;
+//}
 void main()
 {
-	vector<int> arr{ 3, 2, 1, 5, 6, 4 };
-	cout << findKthLargest(arr, 0) << endl;
+	vector<int> arr{ 1, 3, 5, 2, 2 };
+	cout << findKthLargest(arr, 3) << endl;
 }
